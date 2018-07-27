@@ -22,6 +22,7 @@ void FlySkyIBus::begin(Stream& stream)
   this->len = 0;
   this->chksum = 0;
   this->lchksum = 0;
+  this->lastUpdate = millis();
 }
 
 void FlySkyIBus::loop(void)
@@ -79,6 +80,7 @@ void FlySkyIBus::loop(void)
               {
                 channel[i / 2] = buffer[i] | (buffer[i + 1] << 8);
               }
+              lastUpdate = millis();
               break;
 
             default:
@@ -105,4 +107,9 @@ uint16_t FlySkyIBus::readChannel(uint8_t channelNr)
   {
     return 0;
   }
+}
+
+long FlySkyIBus::millisSinceUpdate()
+{
+	return millis() - lastUpdate;
 }

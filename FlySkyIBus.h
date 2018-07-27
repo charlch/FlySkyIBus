@@ -14,7 +14,8 @@ public:
   void begin(Stream& stream);
   void loop(void);
   uint16_t readChannel(uint8_t channelNr);
-
+  long millisSinceUpdate();
+  
 private:
   enum State
   {
@@ -40,6 +41,7 @@ private:
   uint16_t channel[PROTOCOL_CHANNELS];
   uint16_t chksum;
   uint8_t lchksum;
+  long lastUpdate;
 };
 
 extern FlySkyIBus IBus;
